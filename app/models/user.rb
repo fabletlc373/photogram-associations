@@ -18,7 +18,11 @@ class User < ApplicationRecord
   })
 
   # Association accessor methods to define:
-  
+  has_many(:comments, class_name: "Comment", foreign_key: "my_id")
+  has_many(:own_photos, class_name: "Photo}", foreign_key: "my_id")
+  has_many(:likes, class_name: "Like", foreign_key: "my_id")
+  has_many(:liked_photos, through: :Like, source: :photo)
+
   ## Direct associations
 
   # User#comments: returns rows from the comments table associated to this user by the author_id column
@@ -56,29 +60,29 @@ class User < ApplicationRecord
 
   # User#discover: returns rows from the photos table associated to this user through its leaders (the leaders' liked_photos)
 
-  def comments
-    my_id = self.id
+  #def comments
+  #  my_id = self.id
 
-    matching_comments = Comment.where({ :author_id => my_id })
+   # matching_comments = Comment.where({ :author_id => my_id })
 
-    return matching_comments
-  end
+    #return matching_comments
+  #end
 
-  def own_photos
-    my_id = self.id
+  #def own_photos
+   # my_id = self.id
 
-    matching_photos = Photo.where({ :owner_id => my_id })
+    #matching_photos = Photo.where({ :owner_id => my_id })
 
-    return matching_photos
-  end
+    #return matching_photos
+  #end
 
-  def likes
-    my_id = self.id
+  #def likes
+   # my_id = self.id
 
-    matching_likes = Like.where({ :fan_id => my_id })
+    #matching_likes = Like.where({ :fan_id => my_id })
 
-    return matching_likes
-  end
+    #return matching_likes
+  #end
 
   def liked_photos
     my_likes = self.likes
